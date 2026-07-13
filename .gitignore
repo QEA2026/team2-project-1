@@ -1,0 +1,16 @@
+# Python
+venv/
+.venv/
+__pycache__/
+**/__pycache__/
+
+# Local databases
+*.db
+
+# IDE/editor files
+.vscode/
+
+# Java/Maven build output
+*.class
+manager_app/bin/
+manager_app/target/
