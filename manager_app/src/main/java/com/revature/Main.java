@@ -4,7 +4,6 @@ import com.revature.controller.AuthController;
 import com.revature.controller.ReportController;
 import com.revature.dao.*;
 import com.revature.model.*;
-import com.revature.service.LoginService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import com.revature.controller.ExpenseController;
@@ -30,8 +29,7 @@ public class Main {
         IReportDao reportDao = new ReportDao();
         ReportController reportController = new ReportController(reportDao);
 
-        LoginService loginService = new LoginService(userDao);
-        AuthController authController = new AuthController(loginService);
+        AuthController authController = new AuthController(userDao);
         ExpenseController expenseController = new ExpenseController(expenseDao, approvalDao);
 
         ObjectMapper objectMapper = new ObjectMapper()
