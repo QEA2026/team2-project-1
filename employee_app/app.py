@@ -155,6 +155,5 @@ def handle_get_non_pending_user_expenses(user_id):
     return jsonify([e.__dict__ for e in history_expenses]), 200
 
 if __name__ == '__main__':
-    subprocess.run(["python", "employee_app/db/seed.py"])
     use_reloader = os.environ.get("FLASK_USE_RELOADER", "1") != "0"
     app.run(host='0.0.0.0', debug=True, port=8080, use_reloader=use_reloader)
