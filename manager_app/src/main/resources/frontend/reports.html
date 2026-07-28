@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav>
+        <a href="pending.html">Pending Expenses</a>
+        <a href="reports.html">Reports</a>
+        <button id="logout-button">Log Out</button>
+    </nav>
+
+    <div class="page-container">
+        <h1>Reports</h1>
+
+        <div class="report-controls">
+            <div class="report-section">
+                <h2>By Employee</h2>
+                <label for="employee-id">Employee (User) ID</label>
+                <input type="number" id="employee-id">
+                <button id="employee-report-button">Get Report</button>
+            </div>
+
+            <div class="report-section">
+                <h2>By Date Range</h2>
+                <label for="start-date">Start Date</label>
+                <input type="date" id="start-date">
+                <label for="end-date">End Date</label>
+                <input type="date" id="end-date">
+                <button id="date-report-button">Get Report</button>
+            </div>
+
+            <div class="report-section">
+                <h2>By Status</h2>
+                <label for="status-select">Status</label>
+                <select id="status-select">
+                    <option value="PENDING">Pending</option>
+                    <option value="APPROVED">Approved</option>
+                    <option value="DENIED">Denied</option>
+                </select>
+                <button id="status-report-button">Get Report</button>
+            </div>
+        </div>
+
+        <p id="report-error" class="error-message"></p>
+
+        <table id="report-table">
+            <thead>
+                <tr>
+                    <th>Expense ID</th>
+                    <th>Employee</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody id="report-table-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/reports.js"></script>
+</body>
+</html>

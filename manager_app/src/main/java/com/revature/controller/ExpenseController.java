@@ -32,8 +32,8 @@ public class ExpenseController {
                     "Expense " + expenseId + " has already been " + approval.getStatus());
         }
 
-        if (!approve && (comment == null || comment.isBlank())) {
-            throw new IllegalArgumentException("A comment is required when denying an expense");
+        if (comment == null || comment.isBlank()) {
+            throw new IllegalArgumentException("A comment is required for approval or denial decisions");
         }
 
         ApprovalStatus newStatus = approve ? ApprovalStatus.APPROVED : ApprovalStatus.DENIED;

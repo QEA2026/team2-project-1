@@ -7,6 +7,7 @@ import com.revature.model.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import com.revature.controller.ExpenseController;
+import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JavalinJackson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -39,6 +40,10 @@ public class Main {
         Javalin app = Javalin.create(config -> {
             config.useVirtualThreads = true;
             config.jsonMapper(new JavalinJackson(objectMapper, false));
+            config.staticFiles.add(staticFiles -> {
+                staticFiles.directory = "/frontend"; // folder inside your resources
+                staticFiles.location = Location.CLASSPATH;
+            });
         }).start(7000);
 
         app.before(Main::requireManager);
@@ -57,8 +62,18 @@ public class Main {
         app.get("/reports/status/{status}", ctx -> handleReportByStatus(ctx, reportController));
     }
 
+    private static final Set<String> PUBLIC_API_PATHS = Set.of("/login");
+
     private static void requireManager(Context ctx) {
-        if (PUBLIC_PATHS.contains(ctx.path())) {
+        String path = ctx.path();
+
+        // Let static frontend files through untouched — HTML, CSS, JS, and the root path
+        boolean isStaticAsset = path.equals("/")
+                || path.endsWith(".html")
+                || path.endsWith(".css")
+                || path.endsWith(".js");
+
+        if (isStaticAsset || PUBLIC_API_PATHS.contains(path)) {
             return;
         }
 

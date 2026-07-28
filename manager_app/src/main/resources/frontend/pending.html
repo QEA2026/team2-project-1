@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Expenses</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+    <a href="pending.html">Pending Expenses</a>
+    <a href="reports.html">Reports</a>
+    <button id="logout-button">Log Out</button>
+    </nav>
+    
+    <div class="page-container">
+        <h1>Pending Expenses</h1>
+        <p id="load-error" class="error-message"></p>
+        <p id="decision-error" class="error-message"></p>
+
+        <table id="pending-table">
+            <thead>
+                <tr>
+                    <th>Expense ID</th>
+                    <th>Employee</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Decision</th>
+                </tr>
+            </thead>
+            <tbody id="pending-table-body">
+                <!-- rows get added here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/pending.js"></script>
+</body>
+</html>
