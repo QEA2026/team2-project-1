@@ -24,6 +24,7 @@ public class AuthController {
 
         User user = userOpt.get();
 
+        /*
         BCrypt.Result result = BCrypt.verifyer().verify(
                 password.toCharArray(),
                 user.getPassword().toCharArray()
@@ -35,6 +36,14 @@ public class AuthController {
 
         if (user.getRole() != Role.MANAGER) {
             throw new SecurityException("Access is restricted to managers");
+        }
+         */
+        if(user.getPassword().equals(password)) {
+            if (user.getRole() != Role.MANAGER) {
+                throw new SecurityException("Access is restricted to managers");
+            }
+        } else {
+            throw new SecurityException("Invalid username or password");
         }
 
         return user;
