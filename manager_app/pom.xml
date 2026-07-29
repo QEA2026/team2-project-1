@@ -37,6 +37,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
             <version>6.3.0</version>
