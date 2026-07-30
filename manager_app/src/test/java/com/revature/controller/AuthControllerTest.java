@@ -26,8 +26,7 @@ class AuthControllerTest {
 
     @Test
     void loginSucceedsWithCorrectPassword() {
-        String hashedPassword = BCrypt.withDefaults().hashToString(12, "password".toCharArray());
-        User fakeUser = new User(1, "admin", hashedPassword, Role.MANAGER);
+        User fakeUser = new User(1, "admin", "password", Role.MANAGER);
 
         when(userDao.findByUsername("admin")).thenReturn(Optional.of(fakeUser));
 

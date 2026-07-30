@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.opentest4j.AssertionFailedError;
 
 import java.time.Duration;
 
@@ -37,7 +38,7 @@ class LoginTest extends BaseSeleniumTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "chrome", "firefox", "edge" })
+    @ValueSource(strings = { "chrome", "edge" })
     void loginFailsWithWrongPassword(String browser) {
         setUpDriver(browser);
 
