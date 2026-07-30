@@ -11,16 +11,13 @@ public class DatabaseConnection {
 
     private static final String DB_PATH = "jdbc:sqlite:../database/database.db";
     private static final String SEED_PATH = "../database/seed.sql";
-    private static final String SCHEMA_PATH = "../database/schema.sql";
-    private static Connection connection;
+    private static final String SCHEMA_PATH = "../database/schema.sql";;
 
     private DatabaseConnection() { }
 
     public static synchronized Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(DB_PATH);
-            initializePragmas(connection);
-        }
+        Connection connection = DriverManager.getConnection(DB_PATH);
+        initializePragmas(connection);
         return connection;
     }
 
@@ -28,9 +25,11 @@ public class DatabaseConnection {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("PRAGMA foreign_keys = ON;");
             stmt.execute("PRAGMA journal_mode = WAL;");
+            stmt.execute("PRAGMA busy_timeout = 5000;");
         }
     }
 
+    /*
     public static synchronized void closeConnection() {
         if (connection != null) {
             try {
@@ -40,6 +39,7 @@ public class DatabaseConnection {
             }
         }
     }
+    */
 
     public static void initializeDatabase() {
         try (Connection conn = getConnection(); 
