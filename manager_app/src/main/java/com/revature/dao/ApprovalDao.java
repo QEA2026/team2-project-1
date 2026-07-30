@@ -38,7 +38,7 @@ public class ApprovalDao implements IApprovalDao {
         String sql = """
             UPDATE approvals
             SET status = ?, reviewer_id = ?, comment = ?, review_date = ?
-            WHERE expense_id = ?
+            WHERE expense_id = ? AND status = 'PENDING'
             """;
 
         try (Connection conn = DatabaseConnection.getConnection();
