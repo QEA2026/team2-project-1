@@ -44,16 +44,42 @@ public class DatabaseConnection {
     public static void initializeDatabase() {
         try (Connection conn = getConnection(); 
             Statement stmt = conn.createStatement()) {
+            
+            // Drop existing tables to start fresh
+            try {
+                stmt.execute("DROP TABLE IF EXISTS approvals");
+                stmt.execute("DROP TABLE IF EXISTS expenses");
+                stmt.execute("DROP TABLE IF EXISTS users");
+            } catch (SQLException e) {
+                // Tables might not exist, continue
+            }
+            
+            // Read and execute schema
             try {
                 String schemaSql = new String(Files.readAllBytes(Path.of(SCHEMA_PATH)));
-                stmt.executeUpdate(schemaSql);
+                // Split by semicolon and execute each statement
+                String[] statements = schemaSql.split(";");
+                for (String statement : statements) {
+                    String trimmed = statement.trim();
+                    if (!trimmed.isEmpty()) {
+                        stmt.execute(trimmed);
+                    }
+                }
             } catch (Exception e) {
                 throw new RuntimeException("Failed to read schema.sql", e);
             }
 
+            // Read and execute seed data
             try {
                 String seedSql = new String(Files.readAllBytes(Path.of(SEED_PATH)));
-                stmt.executeUpdate(seedSql);
+                // Split by semicolon and execute each statement
+                String[] statements = seedSql.split(";");
+                for (String statement : statements) {
+                    String trimmed = statement.trim();
+                    if (!trimmed.isEmpty()) {
+                        stmt.execute(trimmed);
+                    }
+                }
             } catch (Exception e) {
                 throw new RuntimeException("Failed to read seed.sql", e);
             }
