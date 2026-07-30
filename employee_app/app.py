@@ -2,12 +2,18 @@ from controllers import approvals, expenses, users
 from models.approvals import Approval
 from models.users import User
 from models.expenses import Expense
+from db.db import init_db
 import subprocess
 import os
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="frontend", static_url_path="")
+init_db()
+
+@app.route('/')
+def handle_employee_frontend():
+    return send_from_directory(app.static_folder, "index.html")
 
 @app.route('/health', methods=['GET'])
 def handle_get_backend_health():
@@ -156,4 +162,5 @@ def handle_get_non_pending_user_expenses(user_id):
 
 if __name__ == '__main__':
     use_reloader = os.environ.get("FLASK_USE_RELOADER", "1") != "0"
-    app.run(host='0.0.0.0', debug=True, port=8080, use_reloader=use_reloader)
+    port = int(os.environ.get("EMPLOYEE_APP_PORT", "8080"))
+    app.run(host='0.0.0.0', debug=True, port=port, use_reloader=use_reloader)
