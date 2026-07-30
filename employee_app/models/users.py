@@ -4,6 +4,3 @@ class User:
         self.username = username
         self.password = password
         self.role = role
-
-    def __str__(self) -> str:
-        return f"User #{self.id}: {self.username} ({self.role})"

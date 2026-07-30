@@ -5,10 +5,3 @@ class Expense:
         self.amount = amount
         self.description = description
         self.date = date
-
-    def __str__(self) -> str:
-        return (
-            f"Expense #{self.id}: ${self.amount} for {self.description} "
-            f"on {self.date}"
-        )
-    
