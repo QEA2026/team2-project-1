@@ -108,7 +108,7 @@ def get_all_non_pending_user(id:int):
         SELECT e.* FROM expenses e
         JOIN approvals a ON e.id = a.expense_id
         WHERE e.user_id = ?
-        AND a.status != 'pending'
+        AND UPPER(a.status) != 'PENDING'
         """,
         (id,)
     )

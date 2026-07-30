@@ -5,7 +5,7 @@ def create(approval:Approval):
     conn = get_connection()
     cursor = conn.execute(
         """
-        INSERT INTO approvals (expense_id, status, reviewer, comment, review_date)
+        INSERT INTO approvals (expense_id, status, reviewer_id, comment, review_date)
         VALUES (?, ?, ?, ?, ?)
         """,
         (approval.expense_id, approval.status, approval.reviewer, approval.comment, approval.review_date)
