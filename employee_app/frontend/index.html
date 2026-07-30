@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ExpenseFlow | Employee portal</title>
+    <link rel="stylesheet" href="css/employee.css">
+</head>
+<body class="login-page">
+    <main class="login-card">
+        <h1>Employee Login</h1>
+
+        <form id="login-form" novalidate>
+            <label for="username">Username</label>
+            <input id="username" name="username" autocomplete="username" required>
+
+            <label for="password">Password</label>
+            <div class="password-field">
+                <input id="password" name="password" type="password" autocomplete="current-password" required>
+                <button class="password-toggle" type="button" aria-label="Show password">Show</button>
+            </div>
+
+            <button class="button button--primary button--full" type="submit">Log In</button>
+            <p id="login-error" class="form-message" role="alert"></p>
+        </form>
+    </main>
+    <script src="js/login.js"></script>
+</body>
+</html>
