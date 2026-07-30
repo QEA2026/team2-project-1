@@ -1,8 +1,11 @@
 import sqlite3
+import os
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DB_PATH = PROJECT_ROOT / "expenses_system_db.db"
+DB_PATH = Path(
+    os.environ.get("EXPENSE_DB_PATH", PROJECT_ROOT / "expenses_system_db.db")
+).resolve()
 
 def get_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -10,36 +13,15 @@ def get_connection():
     return conn
 
 def init_db():
+    """Create and seed the shared database the first time the app starts."""
+    schema_path = PROJECT_ROOT / "database" / "schema.sql"
+    seed_path = PROJECT_ROOT / "database" / "seed.sql"
+
     with get_connection() as conn:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                role TEXT NOT NULL CHECK(role IN ('Employee', 'Manager'))
-            )
-        """)
+        users_table = conn.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'users'"
+        ).fetchone()
 
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS expenses (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                amount REAL NOT NULL,
-                description TEXT NOT NULL,
-                date TEXT NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id)
-            )
-        """)
-
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS approvals (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                expense_id INTEGER NOT NULL UNIQUE,
-                status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'approved', 'denied')),
-                reviewer INTEGER,
-                comment TEXT,
-                review_date TEXT,
-                FOREIGN KEY (expense_id) REFERENCES expenses(id),
-                FOREIGN KEY (reviewer) REFERENCES users(id)
-            )
-        """)
+        if users_table is None:
+            conn.executescript(schema_path.read_text(encoding="utf-8"))
+            conn.executescript(seed_path.read_text(encoding="utf-8"))
