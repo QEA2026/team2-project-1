@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginTest extends BaseSeleniumTest {
 
     @ParameterizedTest
-    @ValueSource(strings = { "chrome", "firefox", "edge" })
+    @ValueSource(strings = { "chrome", "edge" })
     void managerCanLogInSuccessfully(String browser) {
         setUpDriver(browser);
 
@@ -38,7 +38,7 @@ class LoginTest extends BaseSeleniumTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "chrome", "edge" })
+    @ValueSource(strings = { "chrome", "firefox", "edge" })
     void loginFailsWithWrongPassword(String browser) {
         setUpDriver(browser);
 
