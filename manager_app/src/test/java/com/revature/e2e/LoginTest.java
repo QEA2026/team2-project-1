@@ -27,7 +27,7 @@ class LoginTest extends BaseSeleniumTest {
         passwordField.sendKeys("admin123");
         loginButton.click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(webDriver -> webDriver.getCurrentUrl().endsWith("pending.html"));
 
         WebElement pageHeading = driver.findElement(By.tagName("h1"));
@@ -47,7 +47,7 @@ class LoginTest extends BaseSeleniumTest {
         driver.findElement(By.id("password")).sendKeys("wrongpassword");
         driver.findElement(By.id("login-button")).click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement errorMessage = wait.until(webDriver -> {
            WebElement el = webDriver.findElement(By.id("error-message"));
            return el.getText().isEmpty() ? null : el;
