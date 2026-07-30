@@ -1,5 +1,6 @@
-package com.revature.db;
+package com.revature.unit.db;
 
+import com.revature.db.DatabaseConnection;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

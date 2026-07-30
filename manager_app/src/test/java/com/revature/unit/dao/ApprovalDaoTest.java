@@ -1,5 +1,6 @@
-package com.revature.dao;
+package com.revature.unit.dao;
 
+import com.revature.dao.ApprovalDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.Approval;
 import com.revature.model.ApprovalStatus;

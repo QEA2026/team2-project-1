@@ -1,5 +1,6 @@
-package com.revature.dao;
+package com.revature.unit.dao;
 
+import com.revature.dao.ExpenseDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.PendingExpenseView;
 import org.junit.jupiter.api.BeforeEach;

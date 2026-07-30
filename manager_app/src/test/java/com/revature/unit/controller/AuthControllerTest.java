@@ -1,4 +1,4 @@
-package com.revature.controller;
+package com.revature.unit.controller;
 
 import com.revature.dao.UserDao;
 import com.revature.model.Role;

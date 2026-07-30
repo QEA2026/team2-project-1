@@ -1,5 +1,6 @@
-package com.revature.dao;
+package com.revature.unit.dao;
 
+import com.revature.dao.UserDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.Role;
 import com.revature.model.User;

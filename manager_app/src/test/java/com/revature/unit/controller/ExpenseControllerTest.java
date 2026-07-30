@@ -1,5 +1,6 @@
-package com.revature.controller;
+package com.revature.unit.controller;
 
+import com.revature.controller.ExpenseController;
 import com.revature.dao.ApprovalDao;
 import com.revature.dao.ExpenseDao;
 import com.revature.dao.IApprovalDao;
