@@ -67,6 +67,17 @@
             <artifactId>rest-assured</artifactId>
             <version>5.4.0</version>
             <scope>test</scope>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.45.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>6.3.4</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
