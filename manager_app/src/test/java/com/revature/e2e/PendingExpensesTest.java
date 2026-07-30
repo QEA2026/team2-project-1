@@ -35,6 +35,6 @@ class PendingExpensesTest extends BaseSeleniumTest {
 
         List<WebElement> rows = driver.findElements(By.cssSelector("#pending-table-body tr"));
 
-        assertFalse(rows.isEmpty(), "Expected at least one row in the pending table (or a 'no pending expenses' row)");
+        assertFalse(rows.isEmpty(), "Expected at least one row in the pending table");
     }
 }
