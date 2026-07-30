@@ -1,3 +1,4 @@
+from flask import Flask, jsonify, request, send_from_directory
 from controllers import approvals, expenses, users
 from models.approvals import Approval
 from models.users import User
@@ -6,7 +7,6 @@ from db.db import init_db
 import subprocess
 import os
 
-from flask import Flask, jsonify, request, send_from_directory
 
 app = Flask(__name__, static_folder="frontend", static_url_path="")
 init_db()
@@ -14,10 +14,6 @@ init_db()
 @app.route('/')
 def handle_employee_frontend():
     return send_from_directory(app.static_folder, "index.html")
-
-@app.route('/health', methods=['GET'])
-def handle_get_backend_health():
-    return jsonify(dict({"status":"ok"})), 201
 
 @app.route('/approvals', methods=['GET'])
 def handle_get_all_approvals():

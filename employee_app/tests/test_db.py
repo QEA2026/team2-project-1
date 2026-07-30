@@ -2,7 +2,6 @@ import sqlite3
 import pytest
 from db import db
 
-
 @pytest.fixture
 def temporary_database(tmp_path, monkeypatch):
     database_path = tmp_path / "test_expenses.db"
