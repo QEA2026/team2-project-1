@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginTest extends BaseSeleniumTest {
 
     @ParameterizedTest
-    @ValueSource(strings = { "chrome", "edge" })
+    @ValueSource(strings = { "chrome", "firefox", "edge" })
     void managerCanLogInSuccessfully(String browser) {
         setUpDriver(browser);
 
