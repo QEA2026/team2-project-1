@@ -5,4 +5,6 @@ class Approval:
         self.status = status
         self.reviewer = reviewer
         self.comment = comment
-        self.review_date = review_date
+        self.review_date = (
+            review_date.isoformat() if hasattr(review_date, "isoformat") else review_date
+        )

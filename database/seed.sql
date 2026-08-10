@@ -1,6 +1,4 @@
-PRAGMA foreign_keys = ON;
-
-BEGIN TRANSACTION;
+BEGIN;
 
 INSERT INTO users (id, username, password, role)
 VALUES
@@ -44,5 +42,9 @@ VALUES
     (13, 13, 'DENIED', 4, 'Shipping receipt was not attached.', '2026-07-19'),
     (14, 14, 'PENDING', NULL, NULL, NULL),
     (15, 15, 'APPROVED', 4, 'Approved client meeting expense.', '2026-07-23');
+
+SELECT setval(pg_get_serial_sequence('users', 'id'), (SELECT MAX(id) FROM users));
+SELECT setval(pg_get_serial_sequence('expenses', 'id'), (SELECT MAX(id) FROM expenses));
+SELECT setval(pg_get_serial_sequence('approvals', 'id'), (SELECT MAX(id) FROM approvals));
 
 COMMIT;

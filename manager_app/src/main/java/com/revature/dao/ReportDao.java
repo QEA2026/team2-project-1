@@ -51,8 +51,8 @@ public class ReportDao implements IReportDao {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, start.toString());
-            stmt.setString(2, end.toString());
+            stmt.setObject(1, start);
+            stmt.setObject(2, end);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 return mapResults(rs);

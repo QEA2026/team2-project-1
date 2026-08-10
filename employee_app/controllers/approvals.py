@@ -6,12 +6,13 @@ def create(approval:Approval):
     cursor = conn.execute(
         """
         INSERT INTO approvals (expense_id, status, reviewer_id, comment, review_date)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s)
+        RETURNING id
         """,
         (approval.expense_id, approval.status, approval.reviewer, approval.comment, approval.review_date)
     )
 
-    approval.id = cursor.lastrowid
+    approval.id = cursor.fetchone()[0]
     conn.commit()
     conn.close()
 
@@ -46,7 +47,7 @@ def get_from_id(id:int):
     conn = get_connection()
     cursor = conn.execute(
     """
-    SELECT * FROM approvals WHERE id = ?
+    SELECT * FROM approvals WHERE id = %s
     """, 
     (id,)
     )
@@ -73,7 +74,7 @@ def get_from_expenseid(id:int):
     """
     SELECT a.* FROM approvals a
         JOIN expenses e ON e.id = a.expense_id
-        WHERE e.id = ?
+        WHERE e.id = %s
     """, 
     (id,)
     )

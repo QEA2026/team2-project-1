@@ -9,7 +9,10 @@ import os
 
 
 app = Flask(__name__, static_folder="frontend", static_url_path="")
-init_db()
+if os.environ.get("DB_INIT_ON_STARTUP", "false").lower() == "true":
+    init_db(seed=os.environ.get("DB_SEED_ON_STARTUP", "false").lower() == "true")
+else:
+    print("Nope")
 
 @app.route('/')
 def handle_employee_frontend():

@@ -6,12 +6,13 @@ def create(expense:Expense):
     cursor = conn.execute(
         """
         INSERT INTO expenses (user_id, amount, description, date)
-        VALUES (?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s)
+        RETURNING id
         """,
         (expense.user_id, expense.amount, expense.description, expense.date)
     )
 
-    expense.id = cursor.lastrowid
+    expense.id = cursor.fetchone()[0]
     conn.commit()
     conn.close()
 
@@ -23,8 +24,8 @@ def edit(expense):
     cursor = conn.execute(
         """
         UPDATE expenses
-        SET amount = ?, description = ?, date = ?
-        WHERE id = ?
+        SET amount = %s, description = %s, date = %s
+        WHERE id = %s
         """,
         (expense.amount, expense.description, expense.date, expense.id)
     )
@@ -43,7 +44,7 @@ def remove(id:int):
     conn = get_connection()
     conn.execute(
         """
-        DELETE FROM expenses WHERE id = ?
+        DELETE FROM expenses WHERE id = %s
         """,
         (id,)
     )
@@ -79,7 +80,7 @@ def get_all_by_user(id:int):
     conn = get_connection()
     cursor = conn.execute(
         """
-        SELECT * FROM expenses where user_id = ?
+        SELECT * FROM expenses where user_id = %s
         """,
         (id,)
     )
@@ -107,7 +108,7 @@ def get_all_non_pending_user(id:int):
         """
         SELECT e.* FROM expenses e
         JOIN approvals a ON e.id = a.expense_id
-        WHERE e.user_id = ?
+        WHERE e.user_id = %s
         AND UPPER(a.status) != 'PENDING'
         """,
         (id,)
@@ -118,11 +119,11 @@ def get_all_non_pending_user(id:int):
 
     for row in rows:
         expenses.append(Expense(
-            id=row['id'],
-            user_id=row['user_id'],
-            amount=row['amount'],
-            description=row['description'],
-            date=row['date']
+            id=row[0],
+            user_id=row[1],
+            amount=row[2],
+            description=row[3],
+            date=row[4]
         ))
     
     conn.close()
@@ -132,7 +133,7 @@ def get_from_id(id:int):
     conn = get_connection()
     cursor = conn.execute(
     """
-    SELECT * FROM expenses WHERE id = ?
+    SELECT * FROM expenses WHERE id = %s
     """, 
     (id,)
     )
@@ -151,4 +152,3 @@ def get_from_id(id:int):
             description=row[3],
             date=row[4]
     )
-

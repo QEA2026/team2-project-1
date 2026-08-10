@@ -1,27 +1,37 @@
-import sqlite3
 import os
 from pathlib import Path
+import psycopg
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DB_PATH = Path(
-    os.environ.get("EXPENSE_DB_PATH", PROJECT_ROOT / "expenses_system_db.db")
-).resolve()
+
+
+def _required_environment(name):
+    value = os.environ.get(name, "").strip()
+    if not value:
+        raise RuntimeError(f"Required database environment variable {name} is not set")
+    return value
+
 
 def get_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """Open a PostgreSQL connection to the shared AWS RDS database."""
+    return psycopg.connect(
+        host=_required_environment("RDSHOST"),
+        port=_required_environment("RDS_PORT"),
+        dbname=_required_environment("RDS_DB_NAME"),
+        user=_required_environment("RDS_USERNAME"),
+        password=_required_environment("RDS_PASSWORD"),
+        sslmode=os.environ.get("RDS_SSLMODE", "require"),
+        connect_timeout=int(os.environ.get("RDS_CONNECT_TIMEOUT", "10")),
+    )
 
-def init_db():
-    """Create and seed the shared database the first time the app starts."""
+
+def init_db(seed=False):
+    """Create the PostgreSQL schema and optionally load development seed data."""
     schema_path = PROJECT_ROOT / "database" / "schema.sql"
     seed_path = PROJECT_ROOT / "database" / "seed.sql"
 
     with get_connection() as conn:
-        users_table = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'users'"
-        ).fetchone()
-
-        if users_table is None:
-            conn.executescript(schema_path.read_text(encoding="utf-8"))
-            conn.executescript(seed_path.read_text(encoding="utf-8"))
+        conn.execute(schema_path.read_text(encoding="utf-8"))
+        if seed:
+            conn.execute(seed_path.read_text(encoding="utf-8"))

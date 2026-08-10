@@ -47,7 +47,7 @@ public class ApprovalDao implements IApprovalDao {
             stmt.setString(1, status.name());
             stmt.setInt(2, reviewerId);
             stmt.setString(3, comment);
-            stmt.setString(4, LocalDate.now().toString());
+            stmt.setObject(4, LocalDate.now());
             stmt.setInt(5, expenseId);
 
             int rowsUpdated = stmt.executeUpdate();

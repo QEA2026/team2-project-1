@@ -6,12 +6,13 @@ def create(user:User):
     cursor = conn.execute(
         """
         INSERT INTO users (username, password, role)
-        VALUES (?, ?, ?)
+        VALUES (%s, %s, %s)
+        RETURNING id
         """,
         (user.username, user.password, user.role)
     )
 
-    user.id = cursor.lastrowid
+    user.id = cursor.fetchone()[0]
     conn.commit()
     conn.close()
 
@@ -46,7 +47,7 @@ def get_from_id(id:int):
     conn = get_connection()
     cursor = conn.execute(
     """
-    SELECT * FROM users WHERE id = ?
+    SELECT * FROM users WHERE id = %s
     """, 
     (id,)
     )
@@ -69,7 +70,7 @@ def get_from_username_password(username, password):
     conn = get_connection()
     cursor = conn.execute(
     """
-    SELECT * FROM users WHERE username = ? AND password = ?
+    SELECT * FROM users WHERE username = %s AND password = %s
     """, 
     (username,password)
     )
@@ -86,4 +87,3 @@ def get_from_username_password(username, password):
         password=row[2],
         role=row[3]
     )
-

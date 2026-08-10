@@ -12,7 +12,8 @@ def connection_with_cursor(monkeypatch, cursor):
 
 
 def test_create_inserts_user_and_assigns_id(monkeypatch):
-    cursor = MagicMock(lastrowid=7)
+    cursor = MagicMock()
+    cursor.fetchone.return_value = (7,)
     connection = connection_with_cursor(monkeypatch, cursor)
     user = User(username="alice", password="secret", role="Employee")
 

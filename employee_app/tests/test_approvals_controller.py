@@ -16,7 +16,8 @@ def approval_row():
 
 
 def test_create_inserts_approval_and_assigns_id(monkeypatch):
-    cursor = MagicMock(lastrowid=5)
+    cursor = MagicMock()
+    cursor.fetchone.return_value = (5,)
     connection = connection_with_cursor(monkeypatch, cursor)
     approval = Approval(
         expense_id=10,

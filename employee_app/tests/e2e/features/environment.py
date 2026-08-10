@@ -1,7 +1,7 @@
 import os
 import shutil
 import socket
-import sqlite3
+import psycopg
 import subprocess
 import sys
 import tempfile
@@ -75,14 +75,15 @@ def _create_driver():
 
 def before_all(context):
     context.temp_dir = Path(tempfile.mkdtemp(prefix="expenseflow-e2e-"))
-    context.db_path = context.temp_dir / "expenses_system_db.db"
     context.port = _available_port()
     context.base_url = f"http://127.0.0.1:{context.port}"
 
     server_environment = os.environ.copy()
+    for name in ("RDSHOST", "RDS_PORT", "RDS_DB_NAME", "RDS_USERNAME", "RDS_PASSWORD"):
+        if not server_environment.get(name):
+            raise RuntimeError(f"{name} must be set to run PostgreSQL E2E tests")
     server_environment.update(
         {
-            "EXPENSE_DB_PATH": str(context.db_path),
             "FLASK_USE_RELOADER": "0",
             "EMPLOYEE_APP_PORT": str(context.port),
             "PYTHONUNBUFFERED": "1",
@@ -122,6 +123,12 @@ def after_scenario(context, scenario):
         screenshot_path = context.temp_dir / f"{scenario.name.replace(' ', '_')}.png"
         context.driver.save_screenshot(str(screenshot_path))
         print(f"Failure screenshot: {screenshot_path}")
+    if context.expense_description:
+        with _database_connection() as connection:
+            connection.execute(
+                "DELETE FROM expenses WHERE description = %s",
+                (context.expense_description,),
+            )
 
 
 def after_all(context):
@@ -139,9 +146,9 @@ def after_all(context):
 
 
 def update_expense_status(context, description, status):
-    with sqlite3.connect(context.db_path) as connection:
+    with _database_connection() as connection:
         expense = connection.execute(
-            "SELECT id FROM expenses WHERE description = ? ORDER BY id DESC LIMIT 1",
+            "SELECT id FROM expenses WHERE description = %s ORDER BY id DESC LIMIT 1",
             (description,),
         ).fetchone()
         if expense is None:
@@ -149,8 +156,19 @@ def update_expense_status(context, description, status):
         connection.execute(
             """
             UPDATE approvals
-            SET status = ?, reviewer_id = 4, comment = ?, review_date = date('now')
-            WHERE expense_id = ?
+            SET status = %s, reviewer_id = 4, comment = %s, review_date = CURRENT_DATE
+            WHERE expense_id = %s
             """,
             (status.upper(), "Approved by the E2E manager fixture.", expense[0]),
         )
+
+
+def _database_connection():
+    return psycopg.connect(
+        host=os.environ["RDSHOST"],
+        port=os.environ["RDS_PORT"],
+        dbname=os.environ["RDS_DB_NAME"],
+        user=os.environ["RDS_USERNAME"],
+        password=os.environ["RDS_PASSWORD"],
+        sslmode=os.environ.get("RDS_SSLMODE", "require"),
+    )

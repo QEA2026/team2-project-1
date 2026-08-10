@@ -22,7 +22,8 @@ def make_expense(expense_id=1):
 
 
 def test_create_inserts_expense_and_assigns_id(monkeypatch):
-    cursor = MagicMock(lastrowid=4)
+    cursor = MagicMock()
+    cursor.fetchone.return_value = (4,)
     connection = connection_with_cursor(monkeypatch, cursor)
     expense = make_expense(expense_id=None)
 
@@ -138,15 +139,7 @@ def test_get_all_by_user_returns_empty_list(monkeypatch):
 
 def test_get_all_non_pending_user_returns_expenses(monkeypatch):
     cursor = MagicMock()
-    cursor.fetchall.return_value = [
-        {
-            "id": 1,
-            "user_id": 10,
-            "amount": 25.5,
-            "description": "Lunch",
-            "date": "2026-07-27",
-        }
-    ]
+    cursor.fetchall.return_value = [(1, 10, 25.5, "Lunch", "2026-07-27")]
     connection = connection_with_cursor(monkeypatch, cursor)
 
     result = expenses.get_all_non_pending_user(10)
