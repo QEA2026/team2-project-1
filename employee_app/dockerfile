@@ -1,0 +1,24 @@
+# image
+FROM python:3.12-slim
+
+# python env options
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# container's working dir
+WORKDIR /app
+
+# copy dependencies
+COPY requirements.txt .
+
+# install said dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# copy all files
+COPY . .
+
+# port that should be open for the aplication
+EXPOSE 8000
+
+# command that will run the application
+CMD ["python", "app.py"]

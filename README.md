@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Expense reimbursement system
 
 The employee (Flask/Python) and manager (Javalin/Java) applications share one
@@ -49,3 +50,18 @@ cd manager_app
 mvn clean package
 mvn exec:java -Dexec.mainClass=com.revature.Main
 ```
+=======
+# Python Backend Command
+python employee_app/app.py
+
+## Python Pytest Report Command
+cd employee_app
+pytest --cov=app --cov=controllers --cov=models --cov=db --cov-report=term-missing --cov-report=html
+
+## Python E2E testing
+behave
+
+# Java Backend Command
+#todo
+
+>>>>>>> ffc4e2b (Updated files)

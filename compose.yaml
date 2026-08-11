@@ -1,0 +1,26 @@
+services:
+  employee-app:
+    image: team2-employee-app:${EMPLOYEE_IMAGE_TAG:-latest}
+    build:
+      context: ./employee_app
+      dockerfile: dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${EMPLOYEE_APP_PORT:-8000}:${EMPLOYEE_APP_PORT:-8000}"
+    volumes:
+      - ./database:/database
+    restart: unless-stopped
+
+  manager-app:
+    image: team2-manager-app:${MANAGER_IMAGE_TAG:-latest}
+    build:
+      context: ./manager_app
+      dockerfile: dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${MANAGER_APP_PORT:-7000}:7000"
+    volumes:
+      - ./database:/database
+    restart: unless-stopped

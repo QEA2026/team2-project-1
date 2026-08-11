@@ -16,6 +16,9 @@ __pycache__/
 # IDE/editor files
 .vscode/
 
+# Local environment configuration
+.env
+
 # Java/Maven build output
 *.class
 manager_app/bin/
