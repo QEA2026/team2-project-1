@@ -1,5 +1,8 @@
 package com.revature.api;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +27,9 @@ class ExpenseApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get pending expenses should return list of pending expenses")
+    @Epic("API Testing")
+    @Feature("ExpenseAPI")
+    @Story("Happy Path: Get pending expenses should return list of pending expenses")
     void getPendingExpensesShouldReturnListOfPendingExpenses() {
         given()
         .when()
@@ -35,6 +41,9 @@ class ExpenseApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get pending expenses should return unauthorized without session")
+    @Epic("API Testing")
+    @Feature("ExpenseAPI")
+    @Story("Get pending expenses should return unauthorized without session")
     void getPendingExpensesShouldReturnUnauthorizedWithoutSession() {
         // Clear cookies to simulate unauthenticated request
         RestAssured.reset();
@@ -50,6 +59,9 @@ class ExpenseApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Decide expense should approve with valid request")
+    @Epic("API Testing")
+    @Feature("ExpenseAPI")
+    @Story("Happy Path: Decide expense should approve with valid request")
     void decideExpenseShouldApproveWithValidRequest() {
         int expenseId = 1;
         
@@ -68,6 +80,9 @@ class ExpenseApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Decide expense should deny with valid request")
+    @Epic("API Testing")
+    @Feature("ExpenseAPI")
+    @Story("Happy Path: Decide expense should deny with valid request")
     void decideExpenseShouldDenyWithValidRequest() {
         int expenseId = 1;
         
@@ -86,6 +101,9 @@ class ExpenseApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Decide expense should return bad request with invalid expense id")
+    @Epic("API Testing")
+    @Feature("ExpenseAPI")
+    @Story("Decide expense should return bad request with invalid expense id")
     void decideExpenseShouldReturnBadRequestWithInvalidExpenseId() {
         given()
             .contentType(ContentType.JSON)
@@ -99,6 +117,9 @@ class ExpenseApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Decide expense should require authentication")
+    @Epic("API Testing")
+    @Feature("ExpenseAPI")
+    @Story("Decide expense should require authentication")
     void decideExpenseShouldRequireAuthentication() {
         // Clear cookies to simulate unauthenticated request
         RestAssured.reset();

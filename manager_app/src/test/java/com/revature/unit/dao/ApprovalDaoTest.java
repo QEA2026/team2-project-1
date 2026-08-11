@@ -4,6 +4,9 @@ import com.revature.dao.ApprovalDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.Approval;
 import com.revature.model.ApprovalStatus;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +38,9 @@ class ApprovalDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ApprovalDAO")
+    @Story("Happy Path: Finding approval by expense id returns approval")
     void findByExpenseIdShouldReturnApprovalWhenExpenseIdExists() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -65,6 +71,9 @@ class ApprovalDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ApprovalDAO")
+    @Story("Finding approval by expense id returns empty when none exist")
     void findByExpenseIdShouldReturnEmptyWhenExpenseIdDoesNotExist() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -80,6 +89,9 @@ class ApprovalDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ApprovalDAO")
+    @Story("Happy Path: Recording decision should update SQL database")
     void recordDecisionShouldUpdateApprovalStatusReviewerCommentAndReviewDate() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -104,6 +116,9 @@ class ApprovalDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ApprovalDAO")
+    @Story("Recording decision should throw exception when approval does not exist")
     void recordDecisionShouldThrowExceptionWhenApprovalDoesNotExist() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);

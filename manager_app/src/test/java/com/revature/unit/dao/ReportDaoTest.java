@@ -4,6 +4,9 @@ import com.revature.dao.ReportDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.ApprovalStatus;
 import com.revature.model.ExpenseReportView;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +36,9 @@ class ReportDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ReportDAO")
+    @Story("Happy Path: Find by employee id should return reports for the user")
     void findByEmployeeShouldReturnReportsForUser() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             int userId = 1;
@@ -57,6 +63,9 @@ class ReportDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ReportDAO")
+    @Story("Happy Path: Find by date range should return reports within range")
     void findByDateRangeShouldReturnReportsWithinRange() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             LocalDate start = LocalDate.of(2026, 1, 1);
@@ -87,6 +96,9 @@ class ReportDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ReportDAO")
+    @Story("Happy Path: Find by status should return only matching status")
     void findByStatusShouldReturnOnlyMatchingStatus() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             ApprovalStatus status = ApprovalStatus.PENDING;

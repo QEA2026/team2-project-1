@@ -3,6 +3,9 @@ package com.revature.unit.dao;
 import com.revature.dao.ExpenseDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.PendingExpenseView;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +37,9 @@ class ExpenseDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ExpenseDAO")
+    @Story("Happy Path: Finding pending expenses should return pending expenses")
     void findPendingShouldReturnPendingExpenses() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -60,6 +66,9 @@ class ExpenseDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("ApprovalDAO")
+    @Story("Finding pending expenses should not return approved expenses")
     void findPendingShouldNotReturnApprovedExpenses() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
