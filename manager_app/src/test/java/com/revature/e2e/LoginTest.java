@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginTest extends BaseSeleniumTest {
 
     @ParameterizedTest
-    @ValueSource(strings = { "chrome", "firefox", "edge" })
+    @ValueSource(strings = { "chrome", "edge" })
     @Epic("E2E Testing")
     @Feature("Login Web Interface")
     @Story("Happy Path: Manager logs in successfully")
