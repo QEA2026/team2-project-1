@@ -4,6 +4,9 @@ import com.revature.dao.UserDao;
 import com.revature.model.Role;
 import com.revature.model.User;
 import com.revature.controller.AuthController;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -25,6 +28,9 @@ class AuthControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("AuthController")
+    @Story("Happy Path: Login succeeds with known username and correct password")
     void loginSucceedsWithCorrectPassword() {
         User fakeUser = new User(1, "admin", "password", Role.MANAGER);
 
@@ -37,6 +43,9 @@ class AuthControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("AuthController")
+    @Story("Login fails with known username and incorrect password")
     void loginFailsWithWrongPassword() {
         String hashedPassword = BCrypt.withDefaults().hashToString(12, "password".toCharArray());
         User fakeUser = new User(1, "admin", hashedPassword, Role.MANAGER);
@@ -50,6 +59,9 @@ class AuthControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("AuthController")
+    @Story("Login fails with unknown username")
     void loginFailsWithUnknownUsername() {
         when(userDao.findByUsername("nosuchuser")).thenReturn(Optional.empty());
 

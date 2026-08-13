@@ -1,5 +1,8 @@
 package com.revature.api;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,9 @@ class AuthApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Login should return success with valid credentials")
+    @Epic("API Testing")
+    @Feature("AuthApi")
+    @Story("Happy Path: Login should return success with valid credentials")
     void loginShouldReturnSuccessWithValidCredentials() {
         given()
             .contentType(ContentType.JSON)
@@ -27,6 +33,9 @@ class AuthApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Login should return unauthorized with invalid password")
+    @Epic("API Testing")
+    @Feature("AuthApi")
+    @Story("Login should return unauthorized with invalid password")
     void loginShouldReturnUnauthorizedWithInvalidPassword() {
         given()
             .contentType(ContentType.JSON)
@@ -40,6 +49,9 @@ class AuthApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Login should return unauthorized with non-existent user")
+    @Epic("API Testing")
+    @Feature("AuthApi")
+    @Story("Login should return unauthorized with non-existent user")
     void loginShouldReturnUnauthorizedWithNonExistentUser() {
         given()
             .contentType(ContentType.JSON)
@@ -53,6 +65,9 @@ class AuthApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Whoami should return user info when authenticated")
+    @Epic("API Testing")
+    @Feature("AuthApi")
+    @Story("Whoami should return user info when authenticated")
     void whoamiShouldReturnUserInfoWhenAuthenticated() {
         // First login
         given()
@@ -75,6 +90,9 @@ class AuthApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Logout should invalidate session")
+    @Epic("API Testing")
+    @Feature("AuthApi")
+    @Story("Logout should invalidate session")
     void logoutShouldInvalidateSession() {
         // First login
         given()

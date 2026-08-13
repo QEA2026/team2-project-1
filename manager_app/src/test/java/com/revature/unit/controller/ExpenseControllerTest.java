@@ -8,6 +8,9 @@ import com.revature.dao.IExpenseDao;
 import com.revature.model.Approval;
 import com.revature.model.ApprovalStatus;
 import com.revature.model.PendingExpenseView;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +38,9 @@ public class ExpenseControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("ExpenseController")
+    @Story("Get pending expenses when there are none")
     void getPendingWhenNone() {
         when(expenseDao.findPending()).thenReturn(new ArrayList<>());
 
@@ -44,6 +50,9 @@ public class ExpenseControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("ExpenseController")
+    @Story("Get pending expenses when there is one")
     void getPendingWhenOne() {
         List<PendingExpenseView> samples = new ArrayList<>();
         samples.add(
@@ -58,6 +67,9 @@ public class ExpenseControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("ExpenseController")
+    @Story("Happy Path: Decide pending expense when it exists")
     void decideExpenseWhenPending() {
         Optional<Approval> sampleApproval = Optional.of(new Approval(1, 1, ApprovalStatus.PENDING, null, null, null));
 
@@ -67,11 +79,17 @@ public class ExpenseControllerTest {
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("ExpenseController")
+    @Story("Attempt to decide pending expense when it doesn't exist")
     void decideExpenseWhenNone() {
         assertThrows(IllegalArgumentException.class, () -> expenseController.decideExpense(1, 1, true, "comment"));
     }
 
     @Test
+    @Epic("Unit Testing: Controller")
+    @Feature("ExpenseController")
+    @Story("Attempt to decide already approved expense")
     void decideExpenseAlreadyApproved() {
         Optional<Approval> sampleApproval = Optional.of(new Approval(1, 1, ApprovalStatus.APPROVED, null, null, null));
 
