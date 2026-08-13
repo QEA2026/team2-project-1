@@ -4,7 +4,6 @@ import io.restassured.RestAssured;
 import io.restassured.filter.session.SessionFilter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import com.revature.db.DatabaseConnection;
 
 public class BaseApiTest {
 
@@ -12,9 +11,6 @@ public class BaseApiTest {
 
     @BeforeAll
     static void setUpRestAssured() {
-        // Initialize database before running tests
-        DatabaseConnection.initializeDatabase();
-        
         RestAssured.baseURI = BASE_URL;
     }
 

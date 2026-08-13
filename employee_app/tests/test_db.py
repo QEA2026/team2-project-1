@@ -1,3 +1,4 @@
+import os
 from unittest.mock import MagicMock
 
 import pytest
@@ -43,7 +44,22 @@ def test_get_connection_rejects_missing_required_configuration(monkeypatch):
         db.get_connection()
 
 
-def test_init_db_applies_schema_without_development_seed(monkeypatch):
+def test_configured_database_is_reachable():
+    required = ("RDSHOST", "RDS_PORT", "RDS_DB_NAME", "RDS_USERNAME", "RDS_PASSWORD")
+    if any(not os.environ.get(name, "").strip() for name in required):
+        pytest.skip("RDS integration settings are not configured")
+
+    with db.get_connection() as connection:
+        assert connection.execute("SELECT 1").fetchone() == (1,)
+
+
+def test_init_db_applies_schema_without_development_seed(monkeypatch, tmp_path):
+    database_directory = tmp_path / "database"
+    database_directory.mkdir()
+    (database_directory / "schema.sql").write_text(
+        "CREATE TABLE IF NOT EXISTS users (id INTEGER);", encoding="utf-8"
+    )
+    monkeypatch.setattr(db, "PROJECT_ROOT", tmp_path)
     connection = MagicMock()
     connection.__enter__.return_value = connection
     monkeypatch.setattr(db, "get_connection", lambda: connection)
@@ -55,7 +71,16 @@ def test_init_db_applies_schema_without_development_seed(monkeypatch):
     assert connection.execute.call_count == 1
 
 
-def test_init_db_can_optionally_apply_development_seed(monkeypatch):
+def test_init_db_can_optionally_apply_development_seed(monkeypatch, tmp_path):
+    database_directory = tmp_path / "database"
+    database_directory.mkdir()
+    (database_directory / "schema.sql").write_text(
+        "CREATE TABLE IF NOT EXISTS users (id INTEGER);", encoding="utf-8"
+    )
+    (database_directory / "seed.sql").write_text(
+        "INSERT INTO users (id) VALUES (1);", encoding="utf-8"
+    )
+    monkeypatch.setattr(db, "PROJECT_ROOT", tmp_path)
     connection = MagicMock()
     connection.__enter__.return_value = connection
     monkeypatch.setattr(db, "get_connection", lambda: connection)
