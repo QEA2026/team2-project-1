@@ -4,6 +4,9 @@ import com.revature.dao.UserDao;
 import com.revature.db.DatabaseConnection;
 import com.revature.model.Role;
 import com.revature.model.User;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +38,9 @@ class UserDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("UserDAO")
+    @Story("Happy Path: Find by username should return user when username exists")
     void findByUsernameShouldReturnUserWhenUsernameExists() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -60,6 +66,9 @@ class UserDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("UserDAO")
+    @Story("Find by username should return empty when username does not exist")
     void findByUsernameShouldReturnEmptyWhenUsernameDoesNotExist() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -75,6 +84,9 @@ class UserDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("UserDAO")
+    @Story("Happy Path: Find by id should return user when id exists")
     void findByIdShouldReturnUserWhenIdExists() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);
@@ -96,6 +108,9 @@ class UserDaoTest {
     }
 
     @Test
+    @Epic("Unit Testing: DAO")
+    @Feature("UserDAO")
+    @Story("Find by id should return empty when id does not exist")
     void findByIdShouldReturnEmptyWhenIdDoesNotExist() throws SQLException {
         try (var ignored = mockStatic(DatabaseConnection.class)) {
             when(DatabaseConnection.getConnection()).thenReturn(mockConnection);

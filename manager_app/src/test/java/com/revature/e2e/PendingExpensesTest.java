@@ -1,5 +1,8 @@
 package com.revature.e2e;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
@@ -25,6 +28,9 @@ class PendingExpensesTest extends BaseSeleniumTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "chrome", "firefox", "edge" })
+    @Epic("E2E Testing")
+    @Feature("Pending Expenses Interface")
+    @Story("Pending expenses table appears correctly")
     void pendingTableLoadsAfterLogin(String browser) {
         setUpDriver(browser);
         loginAsManager();

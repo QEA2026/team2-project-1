@@ -1,5 +1,8 @@
 package com.revature.api;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +27,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by employee should return list of reports")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Happy Path: Get report by employee should return list of reports")
     void getReportByEmployeeShouldReturnListOfReports() {
         int userId = 1;
         
@@ -37,6 +43,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by employee should return bad request with invalid user id")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Get report by employee should return bad request with invalid user id")
     void getReportByEmployeeShouldReturnBadRequestWithInvalidUserId() {
         given()
         .when()
@@ -48,6 +57,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by date range should return reports within range")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Happy Path: Get report by date range should return reports within range")
     void getReportByDateRangeShouldReturnReportsWithinRange() {
         given()
             .queryParam("start", "2026-01-01")
@@ -61,6 +73,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by date range should return bad request without parameters")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Get report by date range should return bad request without parameters")
     void getReportByDateRangeShouldReturnBadRequestWithoutParameters() {
         given()
         .when()
@@ -72,6 +87,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by date range should return bad request with invalid date format")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Get report by date range should return bad request with invalid date format")
     void getReportByDateRangeShouldReturnBadRequestWithInvalidDateFormat() {
         given()
             .queryParam("start", "01-01-2026")
@@ -85,6 +103,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by status should return pending reports")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Happy Path: Get report by status should return pending reports")
     void getReportByStatusShouldReturnPendingReports() {
         given()
         .when()
@@ -96,6 +117,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by status should return approved reports")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Happy Path: Get report by status should return approved reports")
     void getReportByStatusShouldReturnApprovedReports() {
         given()
         .when()
@@ -107,6 +131,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by status should return denied reports")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Happy Path: Get report by status should return denied reports")
     void getReportByStatusShouldReturnDeniedReports() {
         given()
         .when()
@@ -118,6 +145,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Get report by status should return bad request with invalid status")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Get report by status should return bad request with invalid status")
     void getReportByStatusShouldReturnBadRequestWithInvalidStatus() {
         given()
         .when()
@@ -129,6 +159,9 @@ class ReportApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("Report endpoints should require authentication")
+    @Epic("API Testing")
+    @Feature("ReportAPI")
+    @Story("Happy Path: Report endpoints should require authentication")
     void reportEndpointsShouldRequireAuthentication() {
         // Clear cookies to simulate unauthenticated request
         RestAssured.reset();

@@ -1,5 +1,8 @@
 package com.revature.e2e;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,6 +15,9 @@ class AuthRedirectTest extends BaseSeleniumTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "chrome", "firefox", "edge" })
+    @Epic("E2E Testing")
+    @Feature("Auth Redirect")
+    @Story("The web interface redirects to index when not logged in")
     void visitingPendingPageWithoutLoginRedirectsToIndex(String browser) {
         setUpDriver(browser);
 
